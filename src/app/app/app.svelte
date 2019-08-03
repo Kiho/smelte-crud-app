@@ -78,7 +78,7 @@
 
 <AppBar>
   <a href="." class="px-2 md:px-8 flex items-center">
-    <img src="/logo.png" alt="Smelte logo" width="44" />
+    <img src="/smelte-crud-app/logo.png" alt="Smelte logo" width="44" />
     <h6 class="pl-3 text-white tracking-widest font-thin text-lg">SMELTE</h6>
   </a>
   <Spacer />
@@ -91,7 +91,7 @@
       on:click={() => showNavMobile.set(!$showNavMobile)} />
   </div>
   <a href="https://github.com/matyunya/smelte" class="px-4">
-    <img src="/github.png" alt="Github Smelte" width="24" height="24" />
+    <img src="/smelte-crud-app/github.png" alt="Github Smelte" width="24" height="24" />
   </a>
 </AppBar>
 
