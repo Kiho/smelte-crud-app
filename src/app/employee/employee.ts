@@ -48,6 +48,13 @@ export const actionColumn: IColumn = {
     class: 'secondary',
 };
 columndata.push(actionColumn);
+export const deleteColumn: IColumn = {
+    label: 'Delete', 
+    field: 'field',
+    component: 'action',
+    class: 'secondary',
+};
+columndata.push(deleteColumn);
 
 const initialData = {
     list: [],
@@ -66,6 +73,7 @@ departmentColumn.component = '';
 const employee = {
     async oncreate(instance: IAppPage) {    
         actionColumn.action = (row) => instance.edit(row);
+        deleteColumn.action = (row) => instance.remove(row);
         await this.getDepartmentList(instance);
     },
     

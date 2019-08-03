@@ -31,6 +31,7 @@ interface IAppPage {
     form: HTMLElement;
     $set: (arg: any) => void;
     edit: (item, evt?) => void;
+    remove: (item, evt?) => void;
     close: () => void;
     getList: () => void;
 }

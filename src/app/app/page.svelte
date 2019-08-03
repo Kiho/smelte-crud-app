@@ -42,6 +42,10 @@
         app.save.call(instance, item, e);
     }
 
+    export function remove(item, e) {
+        app.remove.call(instance, item, e);
+    }
+
     export function edit(item, e) {
         app.edit.call(instance, item, e);
     }

@@ -13,4 +13,8 @@ export default class AppService {
             return Requests.post(`api/${path}`, item).then(fnSave);
         }        
     }
+    
+    static async remove(path: string, id) {
+        return Requests.delete(`api/${path}/${id}`);
+    }
 }

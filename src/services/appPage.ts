@@ -31,6 +31,15 @@ export default {
         AppService.save(this.path, item, fnSave);
     },
     
+    async remove(this: IAppPage, item, evt?) {
+        evt && evt.preventDefault();
+        if (!item || !item.id) {
+            return;
+        }
+        await AppService.remove(this.path, item);
+        this.getList();
+    },
+
     close(this: IAppPage) {
         this.$set({ showModal: false, selectedItem: null });
     },

@@ -57,11 +57,11 @@ class Requests {
             }
         });
     }
-    static async delete(url, body) {
+    static async delete(url) {
         return new Promise(async (res, rej) => {
             try {
                 const headers = Requests.makeHeaders();
-                const json = await Requests.makeRequest(url, 'DELETE', headers, body);
+                const json = await Requests.makeRequest(url, 'DELETE', headers);
                 res(json);
             } catch (err) {
                 rej(err);
