@@ -15,4 +15,8 @@ function fixPathName(path: string) {
     return path;
 }
 
-export { basePath, init, fixPathName };
+function addBasePath(items: { to: string, text:string }[]) {
+    return items.map(x => ({ to: basePath + x.to, text: x.text }));
+}
+
+export { basePath, init, fixPathName, addBasePath };

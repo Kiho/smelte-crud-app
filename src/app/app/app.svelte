@@ -18,10 +18,10 @@
       showNav,
       showNavMobile,
       breakpoint
-    } from "../../stores.js";
+    } from "../../stores";
     import IndexHandler from '../../index.handler';
     
-    import { basePath } from '../../routes';    
+    import { basePath, addBasePath } from '../../config';    
     import roadtrip from 'roadtrip';
     import Routes from '../../routes';
 
@@ -51,25 +51,25 @@
     function navigate(evt, to) {
         if (evt && evt.preventDefault) evt.preventDefault()
         // console.log('roadtrip.RouteData', roadtrip.RouteData);
-        roadtrip.goto(basePath + to);
+        roadtrip.goto(to);
     }
 
-    export const menu = [
+    export const menu = addBasePath([
       { to: "/", text: "Home" },
       { to: "/employee", text: "Employee" },
       { to: "/department", text: "Department" },
       { to: "/about", text: "About" }
-    ];
+    ]);
 
-    export const topMenu = [
-      { to: `${basePath}/about`, text: "About" }
-    ];
+    export const topMenu = addBasePath([
+      { to: "/about", text: "About" }
+    ]);
 
 </script>
 
 <AppBar>
   <a href="." class="px-2 md:px-8 flex items-center">
-    <img src="/smelte-crud-app/logo.png" alt="Smelte logo" width="44" />
+    <img src="{basePath}/logo.png" alt="Smelte logo" width="44" />
     <h6 class="pl-3 text-white tracking-widest font-thin text-lg">SMELTE</h6>
   </a>
   <Spacer />
@@ -82,7 +82,7 @@
       on:click={() => showNavMobile.set(!$showNavMobile)} />
   </div>
   <a href="https://github.com/Kiho/smelte-crud-app" class="px-4">
-    <img src="/smelte-crud-app/github.png" alt="Github Smelte CRUD App" width="24" height="24" />
+    <img src="{basePath}/github.png" alt="Github Smelte CRUD App" width="24" height="24" />
   </a>
 </AppBar>
 
