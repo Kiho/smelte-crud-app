@@ -1,4 +1,5 @@
 import { allWithMapAsync } from "./utils/async";
+import { fixPathName } from './config';
 
 export default class IndexHandler {
     static notify: (data: string) => void;
@@ -39,8 +40,9 @@ export default class IndexHandler {
                     const options: any = { target: this.target };
                     let props;
                     if (current.data.data) {
+                        const pathName = fixPathName(current.pathname);
                         props = Object.assign({}, current.data.data.initialData, { 
-                            partial: current.data.data[current.pathname],
+                            partial: current.data.data[pathName],
                             instance: null,                          
                         });
                         options.props = props;

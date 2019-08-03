@@ -9,3 +9,5 @@ public/components.*
 .rpt2_cache/
 dist/
 !/docs/dist/
+/docs/dist/*.map
+smelte-crud-app/

@@ -31,7 +31,7 @@ export default {
   input: 'src/main.ts',
   output: {
     format: 'esm',
-    sourcemap: true,
+    sourcemap: !production,
     name: 'app',
     dir: buildDir,
   },

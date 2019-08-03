@@ -57,7 +57,7 @@
     "build": "npm run clean:docs && rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "npm run clean && run-p start:dev autobuild",
-    "start": "sirv docs --single",
+    "start": "sirv . --single",
     "start:dev": "sirv public --dev --single"
   },
   "dependencies": {

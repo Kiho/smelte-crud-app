@@ -8,4 +8,11 @@ function init() {
     console.log('basePath: ', basePath);
 }
 
-export { basePath, init };
+function fixPathName(path: string) {
+    if (basePath) {
+        return path.substring(basePath.length);
+    }
+    return path;
+}
+
+export { basePath, init, fixPathName };
