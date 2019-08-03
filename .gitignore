@@ -1,0 +1,11 @@
+.DS_Store
+node_modules
+yarn-error.log
+/cypress/screenshots/
+mmmm.code-workspace
+static/global.css
+public/bundle.*
+public/components.*
+.rpt2_cache/
+dist/
+!/docs/dist/

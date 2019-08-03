@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "declaration": false,
+    "noImplicitAny": false,
+    "allowJs": true,
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "outDir": "build/js/",
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true,
+    "lib":  ["dom", "esnext", "es6"],
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "server"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
+}
