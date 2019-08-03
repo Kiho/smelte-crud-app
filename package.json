@@ -61,6 +61,6 @@
     "start:dev": "sirv public --dev --single"
   },
   "dependencies": {
-    "smelte": "^0.0.30"
+    "smelte": "^0.1.0"
   }
 }
