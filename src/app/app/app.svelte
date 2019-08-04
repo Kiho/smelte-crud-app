@@ -24,6 +24,7 @@
     import { basePath, addBasePath } from '../../config';    
     import roadtrip from 'roadtrip';
     import Routes from '../../routes';
+    import Globals from '../../globals/Globals.svelte';
 
     const dispatch = createEventDispatcher();
     // const { page } = stores();
@@ -122,4 +123,4 @@
 
   </main>
 {/if}
-
+<Globals />

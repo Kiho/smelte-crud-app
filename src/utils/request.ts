@@ -1,4 +1,5 @@
 ﻿const apiUrl ='https://safe-springs-35306.herokuapp.com/';
+// const apiUrl ='http://localhost:7000/';
 
 class Requests {
     static async makeRequest(url, method, headers, body?) {

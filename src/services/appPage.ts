@@ -1,4 +1,5 @@
 import AppService from './appService';
+import { confirm } from '../globals';
 
 export default {
     async getListByName(this: IAppPage, path: string) {
@@ -36,8 +37,11 @@ export default {
         if (!item || !item.id) {
             return;
         }
-        await AppService.remove(this.path, item);
-        this.getList();
+        const r = await confirm('Are you sure to delete this record?');
+        if (r) {
+            await AppService.remove(this.path, item);
+            this.getList();
+        }
     },
 
     close(this: IAppPage) {
