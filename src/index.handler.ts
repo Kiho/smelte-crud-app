@@ -13,17 +13,18 @@ export default class IndexHandler {
     protected async importModules() {
         const modules: any = {
             template: await import('./app/app/page.svelte'),
-            data: await this.module,
+            data: await this.module(),
         }
         return allWithMapAsync(modules);
     }
 
     protected async beforeenter(current, previous) {
         if (this.ctor) {
+            console.log(typeof this.ctor);
             let ctor = this.ctor;
             if (ctor.then) {             
                 ctor = (await this.ctor).default;
-            }
+            } 
             this.component = new ctor({
                 target: this.target,
             });         

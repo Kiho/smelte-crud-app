@@ -21,8 +21,8 @@ export default class Routes {
     init(target) {
         this.indexHandler = new IndexHandler(Home, target);
         this.aboutHandler = new IndexHandler(import(`./app/about/About.svelte`), target);
-        this.employeeHandler = new IndexHandler(null, target, import('./app/employee/employee'));
-        this.departmentHandler = new IndexHandler(null, target, import('./app/department/department'));
+        this.employeeHandler = new IndexHandler(null, target, () => import('./app/employee/employee'));
+        this.departmentHandler = new IndexHandler(null, target, () => import('./app/department/department'));
         this.formgridHandler = new IndexHandler(FormGrid, target);
 
         this.router
