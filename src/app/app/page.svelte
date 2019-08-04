@@ -16,6 +16,7 @@
     export let path = '';
     export let fielddata = [];
     export let form = null;
+    export let loading = false;
 
     let initialized = false;
     const app = Object.assign({}, appPage);
@@ -60,7 +61,7 @@
 <div>
     <h4 class="capitalize pb-8">{title}</h4>
     <div class="py-2">
-        <DataGrid bind:rows="{list}" bind:columns="{columndata}" edit={false} ></DataGrid>
+        <DataGrid bind:rows="{list}" bind:columns="{columndata}" edit={false} {loading} />
     </div>
     <div class="py-2">
         <Button on:click='{add}'>Add New</Button>
@@ -68,7 +69,7 @@
     <div>
         <div class=form-group bind:this="{form}">
             <Modal bind:showModal on:close="{close}" on:save="{(e) => save(selectedItem, e)}" title={selectedItem ? selectedItem.name : ''}>
-                <FormGrid columns={fielddata} bind:item="{selectedItem}" ></FormGrid>
+                <FormGrid columns={fielddata} bind:item="{selectedItem}" />
             </Modal>
         </div> 
     </div>

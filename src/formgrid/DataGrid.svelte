@@ -1,7 +1,8 @@
 <script>
   import { afterUpdate, createEventDispatcher } from 'svelte';
+  import { slide } from "svelte/transition";
   import DataCol from './DataCol.svelte';
-  import { Icon } from "smelte";
+  import { Icon, ProgressLinear } from "smelte";
 
   const dispatch = createEventDispatcher();
 
@@ -9,6 +10,9 @@
   export let columns = [];
   export let rows = [];
   export let selected = null;
+  export let loading = false;
+  export let hideProgress = false;
+  export let wrapperClasses = "rounded elevation-3 relative text-sm overflow-x-auto";
 
   function setRowCol(settings, i, j) {
     settings.dataset = { row: i, col: j };
@@ -76,54 +80,56 @@
 </script>
 
 <style>
-  table {
-    @apply rounded elevation-3 p-2 text-sm;
+  th, td {
+    @apply p-3 font-normal text-right;
+  }
 
-    & th, & td {
-      @apply p-3 font-normal text-left;
-    }
+  th:first-child, td:first-child {
+    @apply text-left border-r;
+  }
 
-    & th:first-child, & td:first-child {
-      @apply text-left border-r;
-    }
+  th {
+    @apply text-gray-600 text-xs cursor-pointer;
+  }
 
-    & th {
-      @apply text-gray-600 text-xs cursor-pointer;
+  th .asc {
+    transform: rotate(180deg);
+  }
 
-      & .asc {
-        transform: rotate(180deg);
-      }
+  th .sort-wrapper {
+    @apply flex items-center justify-end;
+  }
 
-      & .sort-wrapper {
-        @apply flex items-center justify-end;
-      }
+  th:first-child .sort-wrapper {
+    @apply justify-start;
+  }
 
-      &:first-child .sort-wrapper {
-        @apply justify-start;
-      }
+  th .sort {
+    @apply w-4 h-4 opacity-0 transition-fast;
+  }
 
-      & .sort {
-        @apply w-4 h-4 opacity-0 transition-fast;
-      }
+  th:hover {
+    @apply text-black transition-fast;
+  }
 
-      &:hover {
-        @apply text-black transition-fast;
-        & .sort {
-          @apply opacity-100;
-        }
-      }
-    }
+  th:hover .sort {
+    @apply opacity-100;
+  }
 
-    & tr {
-      @apply border-gray-200 border-t border-b px-3;
-      &:hover {
-        @apply bg-gray-50;
-      }
-    }
+  tr {
+    @apply border-gray-200 border-t border-b px-3;
+  }
+
+  tr:hover {
+    @apply bg-gray-50;
+  }
+
+  tr.selected {
+    @apply bg-primary-50;
   }
 </style>
 
-<table class="p-1">
+<table class={wrapperClasses}>
   <thead class="items-center">
     <tr>
     {#each columns as column, i}
@@ -149,7 +155,11 @@
     {/each}
     </tr>
   </thead>
-
+  {#if loading && !hideProgress}
+    <div class="absolute w-full" transition:slide>
+      <ProgressLinear />
+    </div>
+  {/if}
   <tbody>
     {#each rows as row, i}
       <tr>

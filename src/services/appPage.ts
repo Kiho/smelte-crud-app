@@ -1,10 +1,23 @@
 import AppService from './appService';
 
+const MIN_LOADER_SEC = 500;
+
 export default {
-    getList(this: IAppPage) {
-        AppService.getList(this.path).then(data => {
-            this.$set({ list: data  });
-        });
+    async getList(this: IAppPage) {
+        const start = Date.now();
+        this.$set({ loading: true });
+        try {
+            const data = await AppService.getList(this.path);
+            this.$set({ list: data });
+        } catch (error) {
+            console.error('getList:', error);
+        }
+        const elapsed = Date.now() - start;
+        if (elapsed < MIN_LOADER_SEC) {
+            setTimeout(() => this.$set({ loading: false }), 500);
+        } else {
+            this.$set({ loading: false });
+        }        
     },
 
     add(this: IAppPage, evt?) {
@@ -30,7 +43,7 @@ export default {
         }
         AppService.save(this.path, item, fnSave);
     },
-    
+
     async remove(this: IAppPage, item, evt?) {
         evt && evt.preventDefault();
         if (!item || !item.id) {
