@@ -53,7 +53,11 @@
 
     export function getList() {
         app.getList.call(instance);
-    }  
+    }
+    
+    export function getListByName(path) {
+        return app.getListByName.call(instance, path);
+    }
 </script>
 
 <svelte:options accessors={true}/>

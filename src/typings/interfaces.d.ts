@@ -34,4 +34,5 @@ interface IAppPage {
     remove: (item, evt?) => void;
     close: () => void;
     getList: () => void;
+    getListByName: (path?: string) => Promise<any[]>;
 }

@@ -79,8 +79,8 @@ const employee = {
     
     async getDepartmentList(instance: IAppPage) {
         console.log('getList');
-        const depts = await AppService.getList('department');
-        instance.$set({ departmentList: depts });
+        const depts = await instance.getListByName('department');
+        // instance.$set({ departmentList: depts });
         departmentField.items = depts.map(x => ({ value: x.id, text: x.name }));
         departmentField.items.unshift({ value: 0 , text: ''});
         departmentColumn.field = (data) => {

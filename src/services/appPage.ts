@@ -1,23 +1,13 @@
 import AppService from './appService';
 
-const MIN_LOADER_SEC = 500;
-
 export default {
+    async getListByName(this: IAppPage, path: string) {
+        return AppService.getListByName(this, path);
+    },
+
     async getList(this: IAppPage) {
-        const start = Date.now();
-        this.$set({ loading: true });
-        try {
-            const data = await AppService.getList(this.path);
-            this.$set({ list: data });
-        } catch (error) {
-            console.error('getList:', error);
-        }
-        const elapsed = Date.now() - start;
-        if (elapsed < MIN_LOADER_SEC) {
-            setTimeout(() => this.$set({ loading: false }), 500);
-        } else {
-            this.$set({ loading: false });
-        }        
+        const data = await this.getListByName(this.path);
+        this.$set({ list: data });  
     },
 
     add(this: IAppPage, evt?) {
@@ -30,18 +20,15 @@ export default {
         this.$set({ showModal: true, selectedItem: Object.assign({}, item) });
     },
 
-    save(this: IAppPage, item, evt?) {
+    async save(this: IAppPage, item, evt?) {
         evt && evt.preventDefault();
-        const self = this;
         const refForm = this.form.querySelector('form');
         if (!validateForm(refForm)) {
             return;
-        }
-        const fnSave = (data) => {
-            self.close();
-            self.getList();
-        }
-        AppService.save(this.path, item, fnSave);
+        }        
+        await AppService.save(this.path, item);
+        this.close();
+        this.getList();
     },
 
     async remove(this: IAppPage, item, evt?) {
