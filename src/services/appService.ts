@@ -7,16 +7,14 @@ export default class AppService {
     static setLoading = (app) => {
         const start = Date.now();
         app.$set({ loading: true });
-        return ()=> {
+        return () => {
             const elapsed = Date.now() - start;
             if (elapsed < MIN_LOADER_SEC) {
                 setTimeout(() => {
-                    app.$set({ loading: false });
-                    console.log('delayed - unloading', elapsed);                    
+                    app.$set({ loading: false });                  
                 }, MIN_LOADER_SEC);
             } else {
                 app.$set({ loading: false });
-                console.log('unloading', elapsed);
             }
         }
     }

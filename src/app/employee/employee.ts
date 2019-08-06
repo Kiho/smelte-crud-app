@@ -34,8 +34,8 @@ export const fielddata: IField[] = [
 }, {
     label: 'Rate',
     field: 'rate',
-    component: 'text', // component: 'currency',
-    required: true,
+    component: 'currency', // component: 'text', // 
+    required: false,    
     row: 4,
     col: 'md-6'
 }];
