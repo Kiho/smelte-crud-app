@@ -42,7 +42,7 @@
     "rollup-plugin-typescript2": "^0.22.1",
     "sapper": "^0.27.0",
     "sirv-cli": "^0.4.2",
-    "svelte": "3.6.7",
+    "svelte": "^3.6.11",
     "svelte-preprocess": "^2.9.0",
     "svelte-preprocess-postcss": "^1.0.0",
     "svelte-waypoint": "^0.1.1",
@@ -61,6 +61,6 @@
     "start:dev": "sirv public --dev --single"
   },
   "dependencies": {
-    "smelte": "^0.1.0"
+    "smelte": "^0.1.2"
   }
 }

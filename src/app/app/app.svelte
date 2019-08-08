@@ -106,11 +106,13 @@
             <hr />
             <h6 class="p-6 ml-1 py-2 text-xs text-gray-900">Utilities</h6>
           {/if}
-
           <a href={item.to} on:click='{event => navigate(event, item.to)}' >
             <ListItem
+              id={item.id}
+              text={item.text}
+              to={item.to}
               selected={currentPath == item.to}
-              {...item}
+              selectedClasses="bg-primary-transLight hover:bg-primary-transLight"
               dense
               navigation />
           </a>
