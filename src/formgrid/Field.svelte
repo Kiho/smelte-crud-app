@@ -6,7 +6,7 @@
     export let submit = false;
     export let error = '';
     export let settings = null;
-    export let uuid = makeUniqueId();
+    // export let uuid = makeUniqueId();
     export let fieldtype = null;
     export let value = '';
     export let withSettings = false;
@@ -56,5 +56,5 @@
 </script>
 
 <div bind:this="{self}">
-    <svelte:component this="{fieldtype}" {...props} bind:value bind:submit bind:error {uuid} />
+    <svelte:component this="{fieldtype}" {...props} bind:value bind:submit bind:error />
 </div>

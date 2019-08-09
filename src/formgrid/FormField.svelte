@@ -3,32 +3,45 @@
     import { TextField, Select } from "smelte";
 
     import {
-        // TextInput,
-        // SelectInput,
         NumberInput,
         CurrencyInput,
         MaskedInput,
     } from './inputs';
-    import Field from './Field.svelte';
-    import { makeUniqueId } from '../utils';
 
-    export let settings = null;
+    export let settings = {};
     export let component = null;
-    export let value = '';
-    export let uuid = makeUniqueId();
+    export let value = '';    
+    export let fieldtype;
+
+    const inputs = 'input, select, textarea'; 
+
+    let self;
+    let submit = false;
+    let error = '';
 
     let props = $$props;
 
-    onMount(() => {
-        console.log('FormField', props);
-    });
-
-    export let fieldlabel;
-    $: {
-        fieldlabel = settings ? settings.label : '';
+    function setError(error1, submit1) {
+        error = error1;
+        if (submit1 != undefined) {
+            submit = submit1;
+        }
     }
 
-    export let fieldtype;
+    function onKeyup(e) {
+        if (submit) {
+            error = e.target.checkValidity() ? '' : e.target.validationMessage;       
+        }
+    }
+
+    onMount(() => {
+        const inputNode = self.querySelector(inputs);
+        if (inputNode) {
+            inputNode.setError = setError;
+            inputNode.onkeyup = onKeyup;
+        }
+    });
+
     $: {
         let ft = TextField;
         if (component) {
@@ -51,4 +64,6 @@
     }
 </script>
 
-<Field {settings} withSettings={true} {fieldtype} bind:value />
+<div bind:this="{self}">
+    <svelte:component this="{fieldtype}" {...props} {...settings} bind:value bind:submit bind:error />
+</div>

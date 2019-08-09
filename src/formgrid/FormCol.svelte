@@ -34,6 +34,6 @@
     {#if edit}
         <FormField bind:value="{source[field]}" settings="{fieldProps}" {component} />
     {:else if displayable}
-        { source[field] }
+        {source[field]}
     {/if}
 </div>

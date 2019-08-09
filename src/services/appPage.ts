@@ -60,7 +60,7 @@ function validateForm(form) {
                     console.log(input.validationMessage);                        
                 }
                 if (input.setError) {
-                    input.setError(input.validationMessage);
+                    input.setError(input.validationMessage, true);
                 }
             }
         }
