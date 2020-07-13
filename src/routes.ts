@@ -7,11 +7,11 @@ import { basePath } from './config';
 export default class Routes {
     router;
 
-    indexHandler: IndexHandler;
-    employeeHandler: IndexHandler;
-    departmentHandler: IndexHandler;
-    aboutHandler: IndexHandler;
-    formgridHandler: IndexHandler;
+    indexHandler!: IndexHandler;
+    employeeHandler!: IndexHandler;
+    departmentHandler!: IndexHandler;
+    aboutHandler!: IndexHandler;
+    formgridHandler!: IndexHandler;
 
     constructor(target: Element) {
         this.router = roadtrip;

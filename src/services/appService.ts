@@ -35,7 +35,7 @@ export default class AppService {
         return Requests.get(`api/${path}`) as Promise<any[]>;
     }
 
-    static async save(path: string, item): Promise<{}> {
+    static async save(path: string, item): Promise<any> {
         if (item.id) {
             return Requests.put(`api/${path}`, item);
         } else {

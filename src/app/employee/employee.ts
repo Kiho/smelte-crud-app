@@ -66,8 +66,8 @@ const initialData = {
     columndata,
 };
 
-const departmentField = fielddata.find(x => x.field == 'departmentId');
-const departmentColumn = columndata.find(x => x.field == 'departmentId');
+const departmentField = fielddata.find(x => x.field == 'departmentId')!;
+const departmentColumn = columndata.find(x => x.field == 'departmentId')!;
 departmentColumn.component = '';
 
 const employee = {

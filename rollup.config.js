@@ -1,70 +1,83 @@
-import commonjs from 'rollup-plugin-commonjs';
-import livereload from 'rollup-plugin-livereload';
-import postcss from 'rollup-plugin-postcss';
-import resolve from 'rollup-plugin-node-resolve';
 import svelte from 'rollup-plugin-svelte';
-import typescript from 'rollup-plugin-typescript2';
-import tscompile from 'typescript';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import replace from 'rollup-plugin-replace';
-import { string } from 'rollup-plugin-string';
-import json from 'rollup-plugin-json';
-import getPreprocessor from 'svelte-preprocess';
+import typescript from '@wessberg/rollup-plugin-ts';
+
+const smelte = require("smelte/rollup-plugin-smelte");
 
 const production = !process.env.ROLLUP_WATCH;
 const mode = production ? 'production' : (process.env.NODE_ENV || 'development');
 const dev = mode === 'development';
 const buildDir = production ? 'docs/dist' : 'public/dist';
 
-console.log('mode', mode);
-
-const postcssPlugins = require("./postcss.config.js");
-const preprocess = getPreprocessor({
-  transformers: {
-    postcss: {
-      plugins: postcssPlugins(),
-    },
-  },
-});
-
 export default {
-  input: 'src/main.ts',
-  output: {
+	input: 'src/main.ts',
+	output: {
     format: 'esm',
     sourcemap: !production,
     name: 'app',
     dir: buildDir,
-  },
-  plugins: [
-    replace({
-      'process.browser': true,
-      'process.env.NODE_ENV': JSON.stringify(mode),
-    }),
-    string({
-      include: ['**/*.txt', '../smelte/examples/*'],
-    }),
-    json({
-      includes: '**./*.json',
-    }),
-    svelte({
-      dev: dev,
-      preprocess,
-      css: css => {
-        css.write(`${buildDir}/components.css`);
-      },
-    }),    
-    typescript({typescript: tscompile}),
-    // resolve({ mainFields: ['svelte', 'module', 'main'] }),
-    resolve(),
+	},
+	plugins: [
+		svelte({
+			// enable run-time checks when not in production
+			dev: !production,
+			// we'll extract any component CSS out into
+			// a separate file - better for performance
+			css: css => {
+				css.write(`${buildDir}/components.css`);
+			}
+		}),
+
+		// If you have external dependencies installed from
+		// npm, you'll most likely need these plugins. In
+		// some cases you'll need additional configuration -
+		// consult the documentation for details:
+		// https://github.com/rollup/plugins/tree/master/packages/commonjs
+		resolve({
+			browser: true,
+			dedupe: ['svelte']
+		}),
     commonjs(),
-    postcss({
-      extract: true,
-      plugins: postcssPlugins(!dev),
+		smelte({
+			purge: production,
+			output: `${buildDir}/smelte.css`, // it defaults to static/global.css which is probably what you expect in Sapper
     }),
-    dev && livereload('public'),
-    !dev && terser(),
-  ],
-  watch: {
-    clearScreen: false,
-  },
+    
+    typescript({}),
+
+		// In dev mode, call `npm run start` once
+		// the bundle has been generated
+		!production && serve(),
+
+		// Watch the `public` directory and refresh the
+		// browser on changes when not in production
+		!production && livereload('public'),
+
+		// If we're building for production (npm run build
+		// instead of npm run dev), minify
+		production && terser()
+	],
+	watch: {
+		clearScreen: false
+	}
 };
+
+function serve() {
+	let started = false;
+
+	return {
+		writeBundle() {
+			if (!started) {
+				started = true;
+
+				require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+					stdio: ['ignore', 'inherit', 'inherit'],
+					shell: true
+				});
+			}
+		}
+	};
+}

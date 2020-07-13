@@ -25,6 +25,7 @@ export function onCreate(input: InputElement, arg: IInputArg) {
 }
 
 export function validate(input: InputElement) {
+    // @ts-ignore // TODO
     if (input.checkValidity) {
         input.setError(input.validationMessage);
     }

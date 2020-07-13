@@ -8,7 +8,8 @@ function alert(message, type = 'info') {
 	function close() {
 		alertStore.update(alerts => alerts.filter(d => d !== data));
 	}
-	const data = { id: Math.random(), message, type, close };
+	// TODO
+	const data: any = { id: Math.random(), message, type, close };
 	alertStore.update(alerts => alerts.concat(data));
 	setTimeout(close, TIMEOUT);
 }
@@ -16,7 +17,8 @@ function alert(message, type = 'info') {
 // e.g. Are you sure you want to delete X?
 function confirm(message) {
 	return new Promise(resolve => {
-		const data = { message, resolve };
+		// TODO
+		const data: any = { message, resolve };
 		confirmStore.set(data);
 	}).finally(() => {
 		confirmStore.set(null);
