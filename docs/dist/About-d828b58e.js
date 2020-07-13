@@ -1,0 +1,1 @@
+import{S as s,i as t,s as a,v as n,a as e,n as o,d as r}from"./main-8c29c256.js";function c(s){let t;return{c(){t=n("h1"),t.textContent="About"},m(s,a){e(s,t,a)},p:o,i:o,o:o,d(s){s&&r(t)}}}export default class extends s{constructor(s){super(),t(this,s,null,c,a,{})}}
