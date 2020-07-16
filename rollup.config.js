@@ -5,10 +5,8 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@wessberg/rollup-plugin-ts';
 import sveltePreprocess from 'svelte-preprocess';
-import smelte from "smelte/rollup-plugin-smelte";
-
-// const smelte = require("smelte/rollup-plugin-smelte");
-const path = require("path");
+import smelte, { postcssProcessor } from "smelte/rollup-plugin-smelte.cjs";
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
 const mode = production ? 'production' : (process.env.NODE_ENV || 'development');
@@ -55,7 +53,7 @@ export default {
       dev: !production,
       preprocess: !production && sveltePreprocess({
         postcss: {
-          plugins: smelte.postcssProcessor(smelteConfig)
+          plugins: postcssProcessor(smelteConfig)
         },
       }),
 			// we'll extract any component CSS out into
