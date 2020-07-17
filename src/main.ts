@@ -4,6 +4,7 @@
 
 import App from './app/app/app.svelte';
 import * as config from './config';
+import 'smelte/src/tailwind.css';
 
 config.init();
 

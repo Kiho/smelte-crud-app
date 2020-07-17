@@ -5,7 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@wessberg/rollup-plugin-ts';
 import sveltePreprocess from 'svelte-preprocess';
-import smelte, { postcssProcessor } from "smelte/rollup-plugin-smelte.cjs";
+import smelte from "smelte/rollup-plugin-smelte";
 import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -17,26 +17,27 @@ const cssPath = path.resolve(`${buildDir}/smelte.css`);
 const smelteConfig = {
 	purge: production,
 	output: cssPath, // it defaults to static/global.css which is probably what you expect in Sapper
-	postcss: [], // Your PostCSS plugins
-	whitelist: [], // Array of classnames whitelisted from purging
-  whitelistPatterns: [ // Same as above, but list of regexes
-    // for JS ripple
-    /ripple/,
-    // date picker
-    /w\-.\/7/
-  ],
 	tailwind: {
-		colors: {
-			primary: "#b027b0",
-			secondary: "#009688",
-			error: "#f44336",
-			success: "#4caf50",
-			alert: "#ff9800",
-			blue: "#2196f3",
-			dark: "#212121"
-		}, // Object of colors to generate a palette from, and then all the utility classes
-		darkMode: true,
-	}, // Any other props will be applied on top of default Smelte tailwind.config.js
+		theme: {
+			extend: {
+				spacing: {
+					72: "18rem",
+					84: "21rem",
+					96: "24rem"
+				}
+			}
+		}
+	},
+	whitelistPatterns: [
+		// for Prismjs code highlighting
+		/language/,
+		/namespace/,
+		/token/,
+		// for JS ripple
+		/ripple/,
+		// date picker
+		/w\-.\/7/
+	]
 };
 
 export default {
@@ -51,20 +52,15 @@ export default {
 		svelte({
 			// enable run-time checks when not in production
       dev: !production,
-      preprocess: !production && sveltePreprocess({
-        postcss: {
-          plugins: postcssProcessor(smelteConfig)
-        },
-      }),
 			// we'll extract any component CSS out into
 			// a separate file - better for performance
 			css: css => {
 				css.write(`${buildDir}/components.css`);
 			},
-			emitCss: production,
+			emitCss: true,
 		}),
 
-		production && smelte(smelteConfig),
+		smelte(smelteConfig),
 		
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
